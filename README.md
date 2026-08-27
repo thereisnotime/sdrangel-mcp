@@ -60,6 +60,8 @@ cp .env.example .env
 
 SDRAngel must be running with its web API enabled (enabled by default, port 8091).
 
+**Tested against:** SDRAngel 7.27.2. The REST API is fairly stable across versions, but if you hit a mismatch on an older or newer release, please [open an issue](https://github.com/thereisnotime/sdrangel-mcp/issues).
+
 ## Usage
 
 ### Claude Desktop

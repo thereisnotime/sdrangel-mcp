@@ -4,7 +4,7 @@ This walks through installing sdrangel-mcp, enabling SDRAngel's REST API, and co
 
 ## 1. Prerequisites
 
-- **[SDRAngel](https://github.com/f4exb/sdrangel)** installed and able to run — with real SDR hardware (RTL-SDR, HackRF, LimeSDR, BladeRF, Airspy, PlutoSDR, and dozens more) or with a file/test source if you just want to try it out.
+- **[SDRAngel](https://github.com/f4exb/sdrangel)** installed and able to run — with real SDR hardware (RTL-SDR, HackRF, LimeSDR, BladeRF, Airspy, PlutoSDR, and dozens more) or with a file/test source if you just want to try it out. This project is tested against **SDRAngel 7.27.2**; the REST API is fairly stable across versions, but [open an issue](https://github.com/thereisnotime/sdrangel-mcp/issues) if you hit a mismatch on another release.
 - SDRAngel's **web/REST API** enabled. It's on by default in most builds, listening on port `8091`. If it isn't reachable, open SDRAngel's Preferences and confirm the REST API server is enabled and bound to a reachable address.
 - An **MCP-compatible client**: Claude Desktop, Claude Code, Cursor, or any other application that speaks MCP over stdio.
 
