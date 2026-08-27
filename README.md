@@ -1,8 +1,23 @@
 # sdrangel-mcp
 
-[![CI](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/ci.yaml/badge.svg)](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/ci.yaml)
-[![Release](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml/badge.svg)](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<table>
+  <tr>
+    <th>CI</th>
+    <th>Code</th>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/ci.yaml"><img src="https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/ci.yaml/badge.svg" alt="CI"></a><br>
+      <a href="https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml"><img src="https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml/badge.svg" alt="Release"></a>
+    </td>
+    <td>
+      <a href="https://github.com/thereisnotime/sdrangel-mcp/releases/latest"><img src="https://img.shields.io/github/v/release/thereisnotime/sdrangel-mcp" alt="Latest Release"></a><br>
+      <a href="https://goreportcard.com/report/github.com/thereisnotime/sdrangel-mcp"><img src="https://goreportcard.com/badge/github.com/thereisnotime/sdrangel-mcp" alt="Go Report Card"></a><br>
+      <a href="https://pkg.go.dev/github.com/thereisnotime/sdrangel-mcp"><img src="https://pkg.go.dev/badge/github.com/thereisnotime/sdrangel-mcp.svg" alt="Go Reference"></a><br>
+      <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+    </td>
+  </tr>
+</table>
 
 An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [SDRAngel](https://github.com/f4exb/sdrangel), the open-source software-defined radio (SDR) application — lets Claude or any other MCP-compatible LLM control SDRAngel's REST API to tune receivers, manage devices, channels, and features, save presets, and stream spectrum data.
 
