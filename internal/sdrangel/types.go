@@ -33,22 +33,39 @@ type Location struct {
 
 // AvailableChannelOrFeatureList lists available channel or feature plugins.
 type AvailableChannelOrFeatureList struct {
-	ChannelList []PluginInfo `json:"channelList,omitempty"`
-	FeatureList []PluginInfo `json:"featureList,omitempty"`
+	ChannelCount int          `json:"channelcount,omitempty"`
+	Channels     []PluginInfo `json:"channels,omitempty"`
+	FeatureCount int          `json:"featurecount,omitempty"`
+	Features     []PluginInfo `json:"features,omitempty"`
 }
 
 // AvailableDeviceList lists available device plugins.
 type AvailableDeviceList struct {
-	DeviceList []PluginInfo `json:"deviceList,omitempty"`
+	DeviceCount int               `json:"devicecount,omitempty"`
+	Devices     []AvailableDevice `json:"devices,omitempty"`
 }
 
-// PluginInfo describes a single plugin.
+// AvailableDevice describes a single detected device instance (a physical
+// device SDRangel can see, not just a supported hardware type).
+type AvailableDevice struct {
+	DeviceNbStreams int    `json:"deviceNbStreams"`
+	DeviceSetIndex  int    `json:"deviceSetIndex"`
+	Direction       int    `json:"direction"`
+	DisplayedName   string `json:"displayedName"`
+	HardwareType    string `json:"hwType,omitempty"`
+	Index           int    `json:"index"`
+	Sequence        int    `json:"sequence"`
+	Serial          string `json:"serial,omitempty"`
+}
+
+// PluginInfo describes a single channel or feature plugin.
 type PluginInfo struct {
-	DisplayedName string `json:"displayedName"`
-	Version       string `json:"version"`
-	Copyright     string `json:"copyright,omitempty"`
-	HardwareType  string `json:"hwType,omitempty"`
-	Tx            int    `json:"tx,omitempty"`
+	ID        string `json:"id"`
+	IDURI     string `json:"idURI,omitempty"`
+	Name      string `json:"name"`
+	Version   string `json:"version"`
+	Direction int    `json:"direction,omitempty"`
+	Index     int    `json:"index,omitempty"`
 }
 
 // AudioDevices lists available audio input and output devices.
