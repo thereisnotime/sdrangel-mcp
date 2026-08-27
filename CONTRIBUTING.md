@@ -32,4 +32,4 @@ chore: update go-sdk to v1.7.0
 2. Add types to `internal/sdrangel/types.go` if needed.
 3. Create `internal/tools/<group>.go` with a `registerXxxTools` function.
 4. Call it from `internal/tools/server.go`.
-5. Update the tool table in `README.md`.
+5. Update the tool table in `README.md` and the matching section in `docs/tools-reference.md`.

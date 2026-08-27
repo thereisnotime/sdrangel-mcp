@@ -4,7 +4,15 @@
 [![Release](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml/badge.svg)](https://github.com/thereisnotime/sdrangel-mcp/actions/workflows/release.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An [MCP](https://modelcontextprotocol.io/) server for [SDRAngel](https://github.com/f4exb/sdrangel) — lets an LLM control SDRAngel's REST API to manage devices, channels, features, presets, and more.
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [SDRAngel](https://github.com/f4exb/sdrangel), the open-source software-defined radio (SDR) application — lets Claude or any other MCP-compatible LLM control SDRAngel's REST API to tune receivers, manage devices, channels, and features, save presets, and stream spectrum data.
+
+## Documentation
+
+- **[Getting Started](docs/getting-started.md)** — install, configure, and connect to Claude Desktop, Claude Code, or any MCP client
+- **[Tools Reference](docs/tools-reference.md)** — every tool, grouped and described in detail
+- **[Architecture](docs/architecture.md)** — how the server works, and the plugin-specific wire format SDRAngel's API uses
+- **[Examples](docs/examples.md)** — worked prompts and tool-call sequences for common SDR tasks
+- **[FAQ](docs/faq.md)** — what this is, what hardware it supports, and how it compares to the raw REST API
 
 ## Features
 
@@ -126,6 +134,8 @@ just run      # start server on stdio
 ```
 
 ## Tools
+
+Full descriptions and usage notes: [docs/tools-reference.md](docs/tools-reference.md).
 
 | Tool | Description |
 |---|---|
