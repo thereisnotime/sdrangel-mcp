@@ -21,7 +21,7 @@ func registerSpectrumTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type SetSpectrumSettingsArgs struct {
-		DeviceSetIndex int                    `json:"deviceSetIndex"`
+		DeviceSetIndex int                       `json:"deviceSetIndex"`
 		Settings       sdrangel.SpectrumSettings `json:"settings"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{

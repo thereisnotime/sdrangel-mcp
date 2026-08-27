@@ -25,7 +25,7 @@ func registerWorkspaceTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type MoveDeviceArgs struct {
-		DeviceSetIndex int                   `json:"deviceSetIndex"`
+		DeviceSetIndex int                    `json:"deviceSetIndex"`
 		Move           sdrangel.WorkspaceMove `json:"move"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
@@ -37,8 +37,8 @@ func registerWorkspaceTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type MoveChannelArgs struct {
-		DeviceSetIndex int                   `json:"deviceSetIndex"`
-		ChannelIndex   int                   `json:"channelIndex"`
+		DeviceSetIndex int                    `json:"deviceSetIndex"`
+		ChannelIndex   int                    `json:"channelIndex"`
 		Move           sdrangel.WorkspaceMove `json:"move"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
@@ -50,7 +50,7 @@ func registerWorkspaceTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type MoveFeatureArgs struct {
-		FeatureIndex int                   `json:"featureIndex"`
+		FeatureIndex int                    `json:"featureIndex"`
 		Move         sdrangel.WorkspaceMove `json:"move"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{

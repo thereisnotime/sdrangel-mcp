@@ -143,8 +143,8 @@ type Configurations struct {
 
 // ConfigurationGroup is a named group of configurations.
 type ConfigurationGroup struct {
-	GroupName        string             `json:"groupName"`
-	NbConfigurations int                `json:"nbConfigurations"`
+	GroupName        string              `json:"groupName"`
+	NbConfigurations int                 `json:"nbConfigurations"`
 	Configurations   []ConfigurationKeys `json:"configurations,omitempty"`
 }
 
@@ -155,9 +155,9 @@ type DeviceSets struct {
 
 // DeviceSetInfo describes a single device set.
 type DeviceSetInfo struct {
-	Index          int          `json:"index"`
-	SamplingDevice DeviceDesc   `json:"samplingDevice"`
-	ChannelCount   int          `json:"channelcount"`
+	Index          int           `json:"index"`
+	SamplingDevice DeviceDesc    `json:"samplingDevice"`
+	ChannelCount   int           `json:"channelcount"`
 	Channels       []ChannelDesc `json:"channels,omitempty"`
 }
 
@@ -166,7 +166,7 @@ type DeviceDesc struct {
 	ID                string `json:"id"`
 	Serial            string `json:"serial,omitempty"`
 	Sequence          int    `json:"sequence"`
-	DeviceNbStreams    int    `json:"deviceNbStreams,omitempty"`
+	DeviceNbStreams   int    `json:"deviceNbStreams,omitempty"`
 	DeviceStreamIndex int    `json:"deviceStreamIndex,omitempty"`
 	HWType            string `json:"hwType,omitempty"`
 	Tx                int    `json:"tx"`

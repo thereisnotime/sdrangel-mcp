@@ -9,7 +9,7 @@ import (
 
 func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 	type AddChannelArgs struct {
-		DeviceSetIndex int               `json:"deviceSetIndex"`
+		DeviceSetIndex int                 `json:"deviceSetIndex"`
 		Channel        sdrangel.ChannelAdd `json:"channel"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
@@ -70,9 +70,9 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type ExecuteChannelActionsArgs struct {
-		DeviceSetIndex int                      `json:"deviceSetIndex"`
-		ChannelIndex   int                      `json:"channelIndex"`
-		Actions        sdrangel.ChannelActions  `json:"actions"`
+		DeviceSetIndex int                     `json:"deviceSetIndex"`
+		ChannelIndex   int                     `json:"channelIndex"`
+		Actions        sdrangel.ChannelActions `json:"actions"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "execute_channel_actions",

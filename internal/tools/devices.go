@@ -9,7 +9,7 @@ import (
 
 func registerDeviceTools(srv *mcp.Server, c *sdrangel.Client) {
 	type SetDeviceArgs struct {
-		DeviceSetIndex int               `json:"deviceSetIndex"`
+		DeviceSetIndex int                 `json:"deviceSetIndex"`
 		Device         sdrangel.DeviceLink `json:"device"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
@@ -33,8 +33,8 @@ func registerDeviceTools(srv *mcp.Server, c *sdrangel.Client) {
 	})
 
 	type SetDeviceSettingsArgs struct {
-		DeviceSetIndex int                       `json:"deviceSetIndex"`
-		Settings       sdrangel.DeviceSettings   `json:"settings"`
+		DeviceSetIndex int                     `json:"deviceSetIndex"`
+		Settings       sdrangel.DeviceSettings `json:"settings"`
 	}
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "set_device_settings",
