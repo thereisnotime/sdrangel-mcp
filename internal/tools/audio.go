@@ -57,4 +57,20 @@ func registerAudioTools(srv *mcp.Server, c *sdrangel.Client) {
 		}
 		return nil, sdrangel.SuccessResponse{Message: "audio output reset"}, nil
 	})
+
+	mcp.AddTool(srv, &mcp.Tool{
+		Name:        "cleanup_audio_input_devices",
+		Description: "Remove registered parameter entries for audio input devices that are no longer present on the system.",
+	}, func(ctx context.Context, _ *mcp.CallToolRequest, _ struct{}) (*mcp.CallToolResult, sdrangel.SuccessResponse, error) {
+		result, err := c.CleanupAudioInputDevices(ctx)
+		return nil, result, err
+	})
+
+	mcp.AddTool(srv, &mcp.Tool{
+		Name:        "cleanup_audio_output_devices",
+		Description: "Remove registered parameter entries for audio output devices that are no longer present on the system.",
+	}, func(ctx context.Context, _ *mcp.CallToolRequest, _ struct{}) (*mcp.CallToolResult, sdrangel.SuccessResponse, error) {
+		result, err := c.CleanupAudioOutputDevices(ctx)
+		return nil, result, err
+	})
 }

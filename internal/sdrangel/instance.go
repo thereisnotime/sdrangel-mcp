@@ -22,6 +22,10 @@ func (c *Client) SetInstanceConfig(ctx context.Context, cfg InstanceConfig) (Ins
 	return put[InstanceConfig](ctx, c, "/sdrangel/config", cfg)
 }
 
+func (c *Client) PatchInstanceConfig(ctx context.Context, cfg InstanceConfig) (InstanceConfig, error) {
+	return patchReq[InstanceConfig](ctx, c, "/sdrangel/config", cfg)
+}
+
 func (c *Client) ListDevicePlugins(ctx context.Context) (AvailableDeviceList, error) {
 	return get[AvailableDeviceList](ctx, c, "/sdrangel/devices")
 }

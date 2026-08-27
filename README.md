@@ -8,9 +8,9 @@ An [MCP](https://modelcontextprotocol.io/) server for [SDRAngel](https://github.
 
 ## Features
 
-- Full coverage of SDRAngel's REST API (port 8091 by default)
-- 62 tools across 11 groups: instance, audio, logging, presets, configurations, device sets, spectrum, devices, channels, features, workspaces
-- Runs over stdio — works with Claude Desktop, Claude Code, and any MCP-compatible client
+- Full coverage of SDRAngel's REST API (port 8091 by default) — every endpoint in SDRAngel's swagger spec is wrapped
+- 93 tools across 12 groups: instance, audio, logging, presets, configurations, feature presets, device sets, spectrum, devices, channels, features, workspaces
+- Runs over stdio — a plain MCP server with no client-specific code, so it works identically with Claude Desktop, Claude Code, Cursor, or any other MCP-compatible client (only the config file differs)
 - Single static binary, no runtime dependencies
 - Config via environment variables or `.env` file
 
@@ -72,6 +72,34 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 }
 ```
 
+### Claude Code
+
+Add to `.mcp.json` in your project root (or `~/.claude.json` for a user-wide server):
+
+```json
+{
+  "mcpServers": {
+    "sdrangel": {
+      "command": "/path/to/sdrangel-mcp",
+      "args": ["serve"],
+      "env": {
+        "SDRANGEL_BASE_URL": "http://localhost:8091"
+      }
+    }
+  }
+}
+```
+
+Or register it without hand-editing JSON:
+
+```sh
+claude mcp add sdrangel /path/to/sdrangel-mcp serve --env SDRANGEL_BASE_URL=http://localhost:8091
+```
+
+### Other MCP clients
+
+Any client that speaks MCP over stdio works the same way: point it at the `sdrangel-mcp` binary with `serve` as the argument, and set `SDRANGEL_BASE_URL` (or the other environment variables below) if SDRAngel isn't on `localhost:8091`. Consult your client's docs for where it expects the server command to be registered.
+
 ### Command line
 
 ```sh
@@ -105,7 +133,8 @@ just run      # start server on stdio
 | `get_instance_summary` | Get SDRAngel instance info: version, PID, OS, DSP bits |
 | `stop_instance` | Stop the SDRAngel application |
 | `get_instance_config` | Get global preferences and commands |
-| `set_instance_config` | Set global preferences and commands |
+| `set_instance_config` | Replace global preferences and commands |
+| `patch_instance_config` | Incrementally update (upsert) global preferences and commands |
 | `list_device_plugins` | List available SDR device plugins |
 | `list_channel_plugins` | List available channel plugins (demodulators) |
 | `list_feature_plugins` | List available feature plugins |
@@ -117,6 +146,8 @@ just run      # start server on stdio
 | `set_audio_output_params` | Configure an audio output device |
 | `reset_audio_input` | Reset audio input to defaults |
 | `reset_audio_output` | Reset audio output to defaults |
+| `cleanup_audio_input_devices` | Remove stale registered input device entries |
+| `cleanup_audio_output_devices` | Remove stale registered output device entries |
 | **Logging** | |
 | `get_logging` | Get logging configuration |
 | `set_logging` | Set logging configuration |
@@ -126,12 +157,26 @@ just run      # start server on stdio
 | `save_preset` | Save device set state into a preset |
 | `create_preset` | Create a new preset from device set state |
 | `delete_preset` | Delete a saved preset |
+| `import_preset_from_file` | Import a preset from a server-side file |
+| `export_preset_to_file` | Export a preset to a server-side file |
+| `import_preset_from_blob` | Import a preset from a base64 blob |
+| `export_preset_to_blob` | Export a preset to a base64 blob |
 | **Configurations** | |
 | `list_configurations` | List all saved workspace configurations |
 | `load_configuration` | Load a saved configuration |
 | `save_configuration` | Save current workspace into a configuration |
 | `create_configuration` | Create a new workspace configuration |
 | `delete_configuration` | Delete a saved configuration |
+| `import_configuration_from_file` | Import a configuration from a server-side file |
+| `export_configuration_to_file` | Export a configuration to a server-side file |
+| `import_configuration_from_blob` | Import a configuration from a base64 blob |
+| `export_configuration_to_blob` | Export a configuration to a base64 blob |
+| **Feature Presets** | |
+| `list_feature_presets` | List all saved feature-set presets |
+| `delete_feature_preset` | Delete a saved feature-set preset |
+| `load_feature_set_preset` | Load a preset into the current feature set |
+| `save_feature_set_preset` | Save the feature set into an existing preset |
+| `create_feature_set_preset` | Create a new preset from the feature set |
 | **Device Sets** | |
 | `list_device_sets` | List all open device sets |
 | `get_device_set` | Get details for a specific device set |
@@ -139,9 +184,13 @@ just run      # start server on stdio
 | `remove_device_set` | Remove the last device set |
 | **Spectrum** | |
 | `get_spectrum_settings` | Get spectrum display settings |
-| `set_spectrum_settings` | Set spectrum display settings |
+| `set_spectrum_settings` | Replace all spectrum display settings |
+| `patch_spectrum_settings` | Partially update spectrum display settings |
 | `start_spectrum_server` | Start the spectrum WebSocket server |
 | `stop_spectrum_server` | Stop the spectrum WebSocket server |
+| `get_spectrum_server_status` | Get the spectrum WebSocket server run status |
+| `get_spectrum_workspace` | Get which workspace the spectrum display is assigned to |
+| `move_spectrum_to_workspace` | Move the spectrum display to a workspace |
 | **Devices** | |
 | `set_device` | Load an SDR device into a device set |
 | `get_device_settings` | Get device settings |
@@ -151,6 +200,10 @@ just run      # start server on stdio
 | `stop_device` | Stop the SDR device |
 | `get_device_run_status` | Get device run state |
 | `get_device_report` | Get device runtime report |
+| `execute_device_actions` | Execute device-specific actions |
+| `get_subdevice_run_status` | Get run state of one subsystem of a MIMO device |
+| `start_subdevice` | Start one subsystem (Rx/Tx side) of a MIMO device |
+| `stop_subdevice` | Stop one subsystem (Rx/Tx side) of a MIMO device |
 | **Channels** | |
 | `add_channel` | Add a channel (demodulator/modulator) |
 | `delete_channel` | Delete a channel |
@@ -175,8 +228,11 @@ just run      # start server on stdio
 | **Workspaces** | |
 | `add_workspace` | Add a new workspace |
 | `delete_workspace` | Delete the last empty workspace |
+| `get_device_workspace` | Get which workspace a device set is assigned to |
 | `move_device_to_workspace` | Move a device set to a workspace |
+| `get_channel_workspace` | Get which workspace a channel is assigned to |
 | `move_channel_to_workspace` | Move a channel to a workspace |
+| `get_feature_workspace` | Get which workspace a feature is assigned to |
 | `move_feature_to_workspace` | Move a feature to a workspace |
 
 ## Contributing

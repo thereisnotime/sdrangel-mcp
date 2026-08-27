@@ -23,3 +23,11 @@ func (c *Client) ResetAudioOutput(ctx context.Context, name string) error {
 	_, err := del[SuccessResponse](ctx, c, "/sdrangel/audio/output/parameters?device="+name, nil)
 	return err
 }
+
+func (c *Client) CleanupAudioInputDevices(ctx context.Context) (SuccessResponse, error) {
+	return patchReq[SuccessResponse](ctx, c, "/sdrangel/audio/input/cleanup", nil)
+}
+
+func (c *Client) CleanupAudioOutputDevices(ctx context.Context) (SuccessResponse, error) {
+	return patchReq[SuccessResponse](ctx, c, "/sdrangel/audio/output/cleanup", nil)
+}

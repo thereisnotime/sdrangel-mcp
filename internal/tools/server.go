@@ -13,6 +13,7 @@ func New(c *sdrangel.Client, opts Options) *mcp.Server {
 	registerLoggingTools(srv, c)
 	registerPresetTools(srv, c)
 	registerConfigurationTools(srv, c)
+	registerFeaturePresetTools(srv, c)
 	registerDeviceSetTools(srv, c)
 	registerSpectrumTools(srv, c)
 	registerDeviceTools(srv, c)

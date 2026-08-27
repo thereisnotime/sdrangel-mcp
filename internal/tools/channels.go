@@ -34,7 +34,7 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "get_channel_settings",
-		Description: "Get the current settings for a channel. Returns channelType and plugin-specific settings JSON (e.g. NFMDemodSettings, WFMDemodSettings).",
+		Description: "Get the current settings for a channel. Returns channelType, direction, settingsKey (the plugin-specific wire key, e.g. NFMDemodSettings, WFMDemodSettings) and settings (that plugin's settings JSON).",
 	}, func(ctx context.Context, _ *mcp.CallToolRequest, args ChannelIndexArgs) (*mcp.CallToolResult, sdrangel.ChannelSettings, error) {
 		result, err := c.GetChannelSettings(ctx, args.DeviceSetIndex, args.ChannelIndex)
 		return nil, result, err
@@ -47,7 +47,7 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 	}
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "set_channel_settings",
-		Description: "Replace all settings for a channel. The settings.settings field is plugin-specific JSON.",
+		Description: "Replace all settings for a channel. Call get_channel_settings first to learn settings.settingsKey (SDRAngel wraps the plugin's settings object under a plugin-specific wire key, e.g. NFMDemodSettings — not a generic \"settings\" key) and echo it back along with settings.settings (the plugin-specific JSON).",
 	}, func(ctx context.Context, _ *mcp.CallToolRequest, args SetChannelSettingsArgs) (*mcp.CallToolResult, sdrangel.ChannelSettings, error) {
 		result, err := c.SetChannelSettings(ctx, args.DeviceSetIndex, args.ChannelIndex, args.Settings)
 		return nil, result, err
@@ -55,7 +55,7 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "patch_channel_settings",
-		Description: "Partially update settings for a channel. Only provided fields are changed. Use for incremental changes like frequency offset or squelch.",
+		Description: "Partially update settings for a channel. Only provided fields are changed. Use for incremental changes like frequency offset or squelch. Call get_channel_settings first to learn settings.settingsKey and echo it back along with the changed fields in settings.settings.",
 	}, func(ctx context.Context, _ *mcp.CallToolRequest, args SetChannelSettingsArgs) (*mcp.CallToolResult, sdrangel.ChannelSettings, error) {
 		result, err := c.PatchChannelSettings(ctx, args.DeviceSetIndex, args.ChannelIndex, args.Settings)
 		return nil, result, err
@@ -63,7 +63,7 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "get_channel_report",
-		Description: "Get the runtime report for a channel (channel-specific runtime info like signal level, lock status, decoded data).",
+		Description: "Get the runtime report for a channel (channel-specific runtime info like signal level, lock status, decoded data). Returns reportKey (the plugin-specific wire key, e.g. NFMDemodReport) and report (that plugin's report JSON).",
 	}, func(ctx context.Context, _ *mcp.CallToolRequest, args ChannelIndexArgs) (*mcp.CallToolResult, sdrangel.ChannelReport, error) {
 		result, err := c.GetChannelReport(ctx, args.DeviceSetIndex, args.ChannelIndex)
 		return nil, result, err
@@ -76,7 +76,7 @@ func registerChannelTools(srv *mcp.Server, c *sdrangel.Client) {
 	}
 	mcp.AddTool(srv, &mcp.Tool{
 		Name:        "execute_channel_actions",
-		Description: "Execute actions on a channel (plugin-specific operations like start/stop recording, send a message, etc.).",
+		Description: "Execute actions on a channel (plugin-specific operations like start/stop recording, send a message, etc.). actions.actionsKey is the plugin-specific wire key (e.g. NFMDemodActions) wrapping actions.actions (the plugin-specific JSON) — not a generic \"actions\" key.",
 	}, func(ctx context.Context, _ *mcp.CallToolRequest, args ExecuteChannelActionsArgs) (*mcp.CallToolResult, sdrangel.SuccessResponse, error) {
 		result, err := c.ExecuteChannelActions(ctx, args.DeviceSetIndex, args.ChannelIndex, args.Actions)
 		return nil, result, err
