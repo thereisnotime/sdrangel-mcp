@@ -35,16 +35,16 @@ checksum:
   name_template: "checksums.txt"
 
 signs:
-  - artifacts: checksum
+  - cmd: cosign
+    artifacts: checksum
+    certificate: "${artifact}.pem"
+    output: true
     args:
-      - "--batch"
-      - "--yes"
-      - "--local-user"
-      - "{{ .Env.GPG_FINGERPRINT }}"
-      - "--output"
-      - "${signature}"
-      - "--detach-sign"
+      - sign-blob
+      - "--output-certificate=${certificate}"
+      - "--output-signature=${signature}"
       - "${artifact}"
+      - "--yes"
 
 sboms:
   - artifacts: archive
