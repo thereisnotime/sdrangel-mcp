@@ -28,6 +28,7 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [
 - **[Architecture](docs/architecture.md)** — how the server works, and the plugin-specific wire format SDRAngel's API uses
 - **[Examples](docs/examples.md)** — worked prompts and tool-call sequences for common SDR tasks
 - **[FAQ](docs/faq.md)** — what this is, what hardware it supports, and how it compares to the raw REST API
+- **[Ollama](docs/ollama.md)** — optional: driving the server from a local Ollama model instead of a cloud one
 
 ## Features
 
@@ -78,6 +79,31 @@ SDRAngel must be running with its web API enabled (enabled by default, port 8091
 **Tested against:** SDRAngel 7.27.2. The REST API is fairly stable across versions, but if you hit a mismatch on an older or newer release, please [open an issue](https://github.com/thereisnotime/sdrangel-mcp/issues).
 
 ## Usage
+
+### Tell your LLM
+
+If you already have a coding agent running (Claude Code, Codex, Gemini CLI, opencode, Cursor), you can skip the manual steps below. Paste this to it and let it do the setup:
+
+```text
+Set up the sdrangel-mcp MCP server for me.
+
+1. Check whether SDRAngel's REST API is reachable: curl http://localhost:8091/sdrangel
+   A JSON response with "appname": "SDRangel" means it's up. If it isn't, tell me to
+   enable the web API in SDRAngel's Preferences and stop.
+2. Install the server. Either download the binary for my OS and architecture from
+   https://github.com/thereisnotime/sdrangel-mcp/releases/latest and put it somewhere
+   on my PATH, or, if Go 1.26+ is installed, run:
+   go install github.com/thereisnotime/sdrangel-mcp/cmd/sdrangel-mcp@latest
+3. Register it with whichever MCP client I'm using, as a stdio server running the
+   binary with the argument "serve", and with SDRANGEL_BASE_URL set to
+   http://localhost:8091. For Claude Code that is:
+   claude mcp add sdrangel /path/to/sdrangel-mcp serve --env SDRANGEL_BASE_URL=http://localhost:8091
+   For other clients, write the equivalent entry into their MCP config file.
+4. Verify it works by running: sdrangel-mcp call get_instance_summary
+   Show me the SDRAngel version it reports.
+
+Then tell me what device sets are currently open and what SDR hardware is available.
+```
 
 ### Claude Desktop
 

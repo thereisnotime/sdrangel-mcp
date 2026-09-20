@@ -10,6 +10,7 @@ This directory has the documentation that doesn't fit in the top-level [README](
 - **[Tools Reference](tools-reference.md)** — every one of the 93 MCP tools, grouped and described, with the arguments each one expects.
 - **[Architecture](architecture.md)** — how the server is built, how it talks to SDRAngel's REST API, and the plugin-specific wire format you need to understand before writing settings/report/action calls.
 - **[Examples](examples.md)** — worked prompts and tool-call sequences for common SDR tasks: tuning a receiver, demodulating NOAA APT, streaming spectrum data, saving a preset.
+- **[Ollama](ollama.md)** — optional setup for driving the server from a local [Ollama](https://ollama.com/) model via [ollama-mcp-bridge](https://github.com/jonigl/ollama-mcp-bridge), including how to narrow the tool list for small models.
 - **[FAQ](faq.md)** — what this project is (and isn't), which SDR hardware it supports (all of it — hardware support comes from SDRAngel, not this server), and how it compares to talking to the REST API directly.
 
 ## Quick links
